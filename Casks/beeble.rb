@@ -31,9 +31,16 @@ cask "beeble" do
   caveats <<~EOS
     The `beeble` and `beeblessh` commands are now on your PATH.
 
-    To let `ssh` bridge a remote host's folders into your channel, install the shell
-    integration from Beeble's Preferences, or add this to your ~/.zshrc by hand:
+    Optional: to let an ordinary `ssh` connect Beeble to that host in the background,
+    add this to your ~/.zshrc (bash on macOS: ~/.bash_profile) and open a new terminal.
 
-      [ -r "$HOME/.beeble/shellrc.zsh" ] && . "$HOME/.beeble/shellrc.zsh"
+      ssh() {
+          if command -v beeble >/dev/null 2>&1; then beeble sshwrap "$@"
+          else command ssh "$@"
+          fi
+      }
+
+    It never breaks ssh: if Beeble is closed, not in a channel, or given arguments it
+    can't parse, it runs the real ssh and says nothing. Bypass it with `command ssh`.
   EOS
 end
