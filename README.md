@@ -37,20 +37,33 @@ without a Gatekeeper warning.
 
 ## Shell integration (optional)
 
-To make `ssh` transparently bridge a remote host's folders into your current channel,
-install the shell integration from Beeble's Preferences, or add this to your `~/.zshrc`
-by hand:
+`beeblessh` bridges a host explicitly. If you live on the same handful of servers, you
+can let an ordinary `ssh` do it for you in the background instead. Add this to your
+`~/.zshrc` and open a new terminal:
 
 ```sh
-[ -r "$HOME/.beeble/shellrc.zsh" ] && . "$HOME/.beeble/shellrc.zsh"
+ssh() {
+    if command -v beeble >/dev/null 2>&1; then beeble sshwrap "$@"
+    else command ssh "$@"
+    fi
+}
 ```
 
 Using bash on macOS, put it in `~/.bash_profile` rather than `~/.bashrc` — terminals
 usually start bash as a *login* shell, which reads the former and not the latter.
 
-The guard matters: it means an uninstalled or not-yet-configured Beeble leaves you with
-a working `ssh`, rather than no `ssh` at all in every terminal until you edit the file
-back.
+From then on `ssh prod` behaves exactly as it always did, except Beeble quietly connects
+to that host at the same time, leaving you to run `beeble share` there whenever you want
+something shared.
+
+It is written not to break `ssh`. If anything goes wrong — Beeble closed, not in a
+channel, arguments it can't make sense of — it runs the real `ssh` and says nothing. The
+`command -v` guard is what keeps that true after you uninstall Beeble; without it you
+would have no working `ssh` in any terminal until you edited the file back. Bypass it at
+any time with `command ssh`.
+
+It only affects interactive shells you start yourself: `git push`, `rsync` and scripts
+call the real `ssh` and never trigger a bridge.
 
 ## Upgrade
 
