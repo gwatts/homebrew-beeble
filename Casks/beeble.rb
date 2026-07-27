@@ -7,7 +7,7 @@ cask "beeble" do
   desc "Live workspace: video channels with shared folders"
   homepage "https://omnipotent.net/beeble/"
 
-  depends_on macos: ">= :sequoia"
+  depends_on macos: :sequoia
   auto_updates false
 
   app "Beeble.app"
