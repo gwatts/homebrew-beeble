@@ -41,21 +41,20 @@ without a Gatekeeper warning.
 can let an ordinary `ssh` do it for you in the background instead:
 
 ```sh
-beeble shell install            # adds it to ~/.zshrc, or ~/.bash_profile for bash
-beeble shell install --print    # ...or just show what that would add, changing nothing
-beeble shell status             # is it installed, and where
-beeble shell uninstall          # take it back out
+beeble shell init >> ~/.zshrc          # zsh
+beeble shell init >> ~/.bash_profile   # bash
 ```
 
 Then open a new terminal. From then on `ssh prod` behaves exactly as it always did,
 except Beeble quietly connects to that host at the same time, leaving you to run
 `beeble share` there whenever you want something shared.
 
-Everything it writes sits between two marker comments, so re-running it rewrites that
-block rather than stacking another copy, and uninstalling removes exactly what it added.
-Your startup file is backed up first.
+For bash that's `.bash_profile` and **not** `.bashrc` — macOS terminals start bash as a
+*login* shell, which reads the former and never the latter, so appending to `.bashrc` is
+the classic way to have this silently do nothing.
 
-It installs this, which you can also print with `beeble shell init` and paste yourself:
+Nothing edits your startup file for you; `beeble shell init` just prints this, and you
+redirect it where you want. To remove it, delete the lines.
 
 ```sh
 ssh() {
