@@ -38,8 +38,24 @@ without a Gatekeeper warning.
 ## Shell integration (optional)
 
 `beeblessh` bridges a host explicitly. If you live on the same handful of servers, you
-can let an ordinary `ssh` do it for you in the background instead. Add this to your
-`~/.zshrc` and open a new terminal:
+can let an ordinary `ssh` do it for you in the background instead:
+
+```sh
+beeble shell install            # adds it to ~/.zshrc, or ~/.bash_profile for bash
+beeble shell install --print    # ...or just show what that would add, changing nothing
+beeble shell status             # is it installed, and where
+beeble shell uninstall          # take it back out
+```
+
+Then open a new terminal. From then on `ssh prod` behaves exactly as it always did,
+except Beeble quietly connects to that host at the same time, leaving you to run
+`beeble share` there whenever you want something shared.
+
+Everything it writes sits between two marker comments, so re-running it rewrites that
+block rather than stacking another copy, and uninstalling removes exactly what it added.
+Your startup file is backed up first.
+
+It installs this, which you can also print with `beeble shell init` and paste yourself:
 
 ```sh
 ssh() {
@@ -48,13 +64,6 @@ ssh() {
     fi
 }
 ```
-
-Using bash on macOS, put it in `~/.bash_profile` rather than `~/.bashrc` — terminals
-usually start bash as a *login* shell, which reads the former and not the latter.
-
-From then on `ssh prod` behaves exactly as it always did, except Beeble quietly connects
-to that host at the same time, leaving you to run `beeble share` there whenever you want
-something shared.
 
 It is written not to break `ssh`. If anything goes wrong — Beeble closed, not in a
 channel, arguments it can't make sense of — it runs the real `ssh` and says nothing. The
