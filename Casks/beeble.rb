@@ -1,6 +1,6 @@
 cask "beeble" do
   version "0.1.0"
-  sha256 "6fcb8885ab908379f3a9f7a402e936c4f9ec76fb2f14fce85cf9bc7794f36320"
+  sha256 "45974eea58ab923b5a19a11c102a51298ea8741b556f09733165a9e57955311c"
 
   url "https://omnipotent.net/beeble/Beeble-#{version}.zip"
   name "Beeble"
@@ -39,10 +39,10 @@ cask "beeble" do
 
     Optional: let an ordinary `ssh` connect Beeble to that host in the background.
 
-      beeble shell install          # adds it to ~/.zshrc (bash: ~/.bash_profile)
-      beeble shell install --print  # ...or show what that would add, and change nothing
+      beeble shell init >> ~/.zshrc          # zsh
+      beeble shell init >> ~/.bash_profile   # bash (not .bashrc — login shell)
 
-    Then open a new terminal. `beeble shell uninstall` takes it back out.
+    Then open a new terminal. To remove it, delete those lines.
 
     It never breaks ssh: if Beeble is closed, not in a channel, or given arguments it
     can't parse, it runs the real ssh and says nothing. Bypass it with `command ssh`.
