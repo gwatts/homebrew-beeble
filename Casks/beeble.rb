@@ -1,6 +1,6 @@
 cask "beeble" do
   version "0.1.0"
-  sha256 "507cb2cafba85e5a7211ad58524b7e281dd1db2c7cc322d07a2f22a0b995fdab"
+  sha256 "6fcb8885ab908379f3a9f7a402e936c4f9ec76fb2f14fce85cf9bc7794f36320"
 
   url "https://omnipotent.net/beeble/Beeble-#{version}.zip"
   name "Beeble"
@@ -28,17 +28,21 @@ cask "beeble" do
     "~/.beeble",
   ]
 
+  # Keep this describing what THIS BUILD ships. An earlier version pointed at a
+  # Preferences control and a generated ~/.beeble/shellrc.zsh, neither of which existed —
+  # so anyone following it got no bridge and no error either, because the guard correctly
+  # falls through to the real ssh. Aspirational instructions are worse than none, and the
+  # same trap applies in reverse: do not describe a verb here before the build being
+  # released actually has it.
   caveats <<~EOS
     The `beeble` and `beeblessh` commands are now on your PATH.
 
-    Optional: to let an ordinary `ssh` connect Beeble to that host in the background,
-    add this to your ~/.zshrc (bash on macOS: ~/.bash_profile) and open a new terminal.
+    Optional: let an ordinary `ssh` connect Beeble to that host in the background.
 
-      ssh() {
-          if command -v beeble >/dev/null 2>&1; then beeble sshwrap "$@"
-          else command ssh "$@"
-          fi
-      }
+      beeble shell install          # adds it to ~/.zshrc (bash: ~/.bash_profile)
+      beeble shell install --print  # ...or show what that would add, and change nothing
+
+    Then open a new terminal. `beeble shell uninstall` takes it back out.
 
     It never breaks ssh: if Beeble is closed, not in a channel, or given arguments it
     can't parse, it runs the real ssh and says nothing. Bypass it with `command ssh`.
