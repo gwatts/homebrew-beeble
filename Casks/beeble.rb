@@ -5,7 +5,7 @@ cask "beeble" do
   url "https://beeble.dev/dl/Beeble-#{version}.zip"
   name "Beeble"
   desc "Live workspace: video channels with shared folders"
-  homepage "https://beeble.dev/dl/"
+  homepage "https://beeble.dev/"
 
   depends_on macos: :sequoia
   auto_updates false
