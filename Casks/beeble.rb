@@ -2,10 +2,10 @@ cask "beeble" do
   version "0.2.0"
   sha256 "f84df9a4f7875deb1227b40f0a48850fee2b6ab1e30fa9daf002ea5a2cc98095"
 
-  url "https://omnipotent.net/beeble/Beeble-#{version}.zip"
+  url "https://beeble.dev/dl/Beeble-#{version}.zip"
   name "Beeble"
   desc "Live workspace: video channels with shared folders"
-  homepage "https://omnipotent.net/beeble/"
+  homepage "https://beeble.dev/dl/"
 
   depends_on macos: :sequoia
   auto_updates false
