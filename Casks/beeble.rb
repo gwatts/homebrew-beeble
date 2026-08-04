@@ -1,6 +1,6 @@
 cask "beeble" do
-  version "0.2.1"
-  sha256 "cf24175a23cbccdee7a596444ba3a0144f54ac7082ec2d74f697dd82ffaba431"
+  version "0.2.2"
+  sha256 "b1c13f218ea90edb3c43598dd1cb2b195ac250a7c0d80bc2a09d3a2ecdf3e2e6"
 
   url "https://beeble.dev/dl/Beeble-#{version}.zip"
   name "Beeble"
@@ -8,7 +8,12 @@ cask "beeble" do
   homepage "https://beeble.dev/"
 
   depends_on macos: :sequoia
-  auto_updates false
+  # Sparkle owns updates for every install vector (the in-app "Upgrade & Restart");
+  # brew is an install channel. true keeps a bulk `brew upgrade` from clobbering a
+  # copy Sparkle already moved ahead of the cask — naming the cask explicitly in
+  # `brew upgrade --cask beeble` still works, which is how pre-Sparkle installs
+  # (≤0.2.x) take their one last brew upgrade onto the Sparkle era.
+  auto_updates true
 
   app "Beeble.app"
   # The shims, NOT Contents/MacOS. CFBundle derives Bundle.main from the path a process was
