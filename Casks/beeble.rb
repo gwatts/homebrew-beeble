@@ -1,6 +1,6 @@
 cask "beeble" do
-  version "0.6.0"
-  sha256 "0b63d2a4edb9b227193370d49a9e46e26dfb1eeda4b5a8eb57eef14469f93dca"
+  version "0.7.0"
+  sha256 "3e1565d2bf073cf165f888b61db7db4fbb40d2f52171f6e39bbd6787bef1086f"
 
   url "https://beeble.dev/dl/Beeble-#{version}.zip"
   name "Beeble"
